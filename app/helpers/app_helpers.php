@@ -18,7 +18,7 @@ function seed_vote_link($seed, $name, $direction, $on = false)
 
 function human_seed_date($seed)
 {
-	 return date('l, \t\h\e jS \of F, Y', strtotime($seed->created_on));
+	 return ago(strtotime($seed->created_on));
 }
 
 function category_link($seed)
@@ -82,6 +82,21 @@ function strip_javascript_attributes($text)
 	$aDisabledAttributes = array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavaible', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragdrop', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onerrorupdate', 'onfilterupdate', 'onfinish', 'onfocus', 'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmoveout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload');
 
 	return preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(" . implode('|', $aDisabledAttributes) . ")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", $text);
+}
+
+// Original code from http://www.php.net/manual/en/function.time.php
+
+function ago($timestamp)
+{
+	$difference = time() - $timestamp;
+	$periods = array("second", "minute", "hour", "day", "week", "month", "years", "decade");
+	$lengths = array("60","60","24","7","4.35","12","10");
+	for($j = 0; $difference >= $lengths[$j]; $j++)
+		$difference /= $lengths[$j];
+	$difference = round($difference);
+	if($difference != 1) $periods[$j].= "s";
+	$text = "$difference $periods[$j] ago";
+	return $text;
 }
 
 ?>

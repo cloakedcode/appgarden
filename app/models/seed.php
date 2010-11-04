@@ -6,7 +6,7 @@ class Seed extends Base
 	{
 		if (empty($this->created_on))
 		{
-			$this->created_on = date('Y-m-d');
+			$this->created_on = date('Y-m-d H:i:s');
 		}
 
 		if (empty($this->user_id) && User::loggedInUser() !== false)

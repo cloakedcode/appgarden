@@ -16,7 +16,7 @@
 	} ?>
 </h2>
 <p>
-<small>Created on <?= human_seed_date($seed) ?> as a <a href='<?= Oak::url(array('controller' => 'categories', 'action' => 'view', 'id' => $seed->category_slug)) ?>'><?= $seed->category_name ?></a> app.</small>
+<small>Planted <?= human_seed_date($seed) ?> as a <a href='<?= Oak::url(array('controller' => 'categories', 'action' => 'view', 'id' => $seed->category_slug)) ?>'><?= $seed->category_name ?></a> app.</small>
 <br/>
 <?= ($being_viewed) ? $seed->description : truncate_text($seed->description, 100, '.', " <a href='".Oak::url(array('action' => 'view', 'id' => $seed->slug))."'>more...</a>") ?>
 </p>
